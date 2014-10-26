@@ -6,7 +6,9 @@
 'use strict';
 
 var fs = require('fs'),
-	path = require('path')
+	path = require('path');
+
+var application = require('./application');
 
 var H9nServer = module.exports = {
 	version: '1.0.0',	// Current version
@@ -14,4 +16,24 @@ var H9nServer = module.exports = {
 	filters: {},
 	rpcFilters: {},
 	connectors: {}
+};
+
+var self = this;
+
+H9nServer.createApp = function(opts){
+	var app = application;
+	app.init(opts);
+	self.app = app;
+	return app;
+};
+
+Object.defineProperty(H9nServer, 'app', {
+	get: function(){
+		return self.app;
+	}
+});
+
+function load(path, name){
+	if(name) return require(path + name);
+	return require(path);
 }
