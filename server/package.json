@@ -1,0 +1,15 @@
+{
+  "name": "h9n",
+  "version": "1.0.0",
+  "description": "h9n",
+  "main": "index.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "dependencies": {
+    "async": "*"
+  },
+  "author": "huangxin",
+  "license": "MIT"
+  "homepage": "https://github.com/3203317/h9n"
+}
