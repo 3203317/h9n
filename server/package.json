@@ -1,7 +1,7 @@
 {
-  "name": "h9n",
+  "name": "h9n-server",
   "version": "1.0.0",
-  "description": "h9n",
+  "description": "h9n-server",
   "main": "index.js",
   "scripts": {
     "test": "test.js"

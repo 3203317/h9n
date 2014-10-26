@@ -5,4 +5,4 @@
  */
 'use strict';
 
-module.exports = require('./lib');
+module.exports = require('./h9nserver');
