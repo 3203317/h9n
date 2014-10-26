@@ -5,4 +5,9 @@
  */
 'use strict';
 
-module.exports = {};
+module.exports = {
+	RESERVED: {
+		CURRENT_SERVER: 'curServer',
+		STARTID: 'startId'
+	}
+};

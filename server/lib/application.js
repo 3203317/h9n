@@ -9,7 +9,9 @@ var path = require('path'),
 	fs = require('fs'),
 	EventEmitter = require('events').EventEmitter;
 
-var utils = require('../../shared/utils');
+var utils = require('../../shared/utils'),
+	appUtil = require('./util/appUtil'),
+	Constants = require('./util/constants');
 
 var Application = module.exports = {};
 
@@ -23,15 +25,12 @@ Application.init = function(opts){
 	opts = opts || {};
 
 	self.settings = {};
+
+	appUtil.defaultConfiguration(self);
+
 	self.state = STATE_INITED;
-
-	console.log('[%s] App inited: %s.', utils.format());
+	console.log('[%s] App inited: %j.', utils.format(), self.getServerId());
 	return self;
-};
-
-Application.set = function(key, val){
-	this.settings[key] = val;
-	return this;
 };
 
 Application.start = function(cb){
@@ -42,4 +41,17 @@ Application.start = function(cb){
 		return;
 	}
 	return self;
+};
+
+Application.getServerId = function(){
+	return this.get(Constants.RESERVED.STARTID)
+};
+
+Application.set = function(key, val){
+	this.settings[key] = val;
+	return this;
+};
+
+Application.get = function(key){
+	return this.settings[key];
 };
