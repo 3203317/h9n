@@ -8,7 +8,8 @@
 var fs = require('fs'),
 	path = require('path');
 
-var application = require('./application');
+var application = require('./application'),
+	utils = require('../../shared/utils');
 
 var H9nServer = module.exports = {
 	version: '1.0.0',	// Current version
@@ -20,10 +21,11 @@ var H9nServer = module.exports = {
 
 var self = this;
 
-H9nServer.createApp = function(opts){
+H9nServer.createApp = function(opts, cb){
 	var app = application;
 	app.init(opts);
 	self.app = app;
+	cb.bind(app)();
 	return app;
 };
 

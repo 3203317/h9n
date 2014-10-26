@@ -8,8 +8,11 @@
 var utils = require('../../../shared/utils'),
 	speedt = require('../../');
 
-var app = speedt.createApp();
-app.set('name', 'uplserv');
+var app = speedt.createApp(null, function (err){
+	var self = this;
+	self.set('name', 'uplserv');
+});
+
 
 app.start(function (err){
 	if(err){
