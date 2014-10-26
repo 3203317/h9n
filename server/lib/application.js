@@ -20,13 +20,18 @@ var STATE_START   = 2;	// app start
 var STATE_STARTED = 3;	// app has started
 var STATE_STOPED  = 4;	// app has stoped
 
-Application.init = function(opts){
+Application.init = function(opts, cb){
 	var self = this;
 	opts = opts || {};
 
 	self.settings = {};
 
-	appUtil.defaultConfiguration(self);
+	try{
+		appUtil.defaultConfiguration(self);
+	}catch(e){
+		cb(e);
+		return;
+	}
 
 	self.state = STATE_INITED;
 	console.log('[%s] App inited: %j.', utils.format(), self.getServerId());
