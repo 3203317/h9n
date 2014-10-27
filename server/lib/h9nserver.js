@@ -31,7 +31,6 @@ H9nServer.createApp = function(opts, cb){
 		self.app = app;
 		cb.bind(app)();
 	});
-	return app;
 };
 
 Object.defineProperty(H9nServer, 'app', {

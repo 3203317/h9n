@@ -6,7 +6,7 @@
 'use strict';
 
 var utils = require('../../../shared/utils'),
-	speedt = require('../../');
+	uplserv = require('../../');
 
 process.on('uncaughtException', function (err){
 	if(err){
@@ -22,13 +22,17 @@ process.on('exit', function (code){
 	console.error('[%s] Process exit with code: %s.', utils.format(), code)
 });
 
-var app = speedt.createApp(null, function (err){
+uplserv.createApp(null, function (err){
+	if(err){
+		console.error('[%s] Create app error: %j.', utils.format(), err.message);
+		return;
+	}
 	var self = this;
 	self.set('name', 'uplserv');
 });
 
-app.start(function (err){
-	if(err){
-		console.error('[%s] App start error: %s.', utils.format(), err.message);
-	}
-});
+//app.start(function (err){
+//	if(err){
+//		console.error('[%s] App start error: %s.', utils.format(), err.message);
+//	}
+//});

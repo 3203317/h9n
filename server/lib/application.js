@@ -23,7 +23,6 @@ var STATE_STOPED  = 4;	// app has stoped
 Application.init = function(opts, cb){
 	var self = this;
 	opts = opts || {};
-
 	self.settings = {};
 
 	try{
@@ -35,6 +34,7 @@ Application.init = function(opts, cb){
 
 	self.state = STATE_INITED;
 	console.log('[%s] App inited: %j.', utils.format(), self.getServerId());
+	cb();
 	return self;
 };
 
