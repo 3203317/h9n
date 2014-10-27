@@ -27,7 +27,12 @@ Application.init = function(opts){
 
 	appUtil.defaultConfiguration(self);
 
+	var base = opts.base || path.dirname(require.main.filename);
+	self.set(Constants.RESERVED.BASE, base, true);
+
+	self.event = new EventEmitter();
 	self.state = STATE_INITED;
+
 	console.log('[%s] App inited: %j.', utils.format(), self.getServerId());
 };
 
@@ -38,7 +43,6 @@ Application.start = function(cb){
 		utils.invokeCallback(cb, new Error('app has already start'));
 		return;
 	}
-	return self;
 };
 
 Application.configure = function (env, type, fn){
@@ -57,7 +61,7 @@ Application.configure = function (env, type, fn){
 };
 
 Application.getServerId = function(){
-	return this.get(Constants.RESERVED.STARTID)
+	return this.get(Constants.RESERVED.CURRENT_SERVER).id;
 };
 
 Application.set = function(key, val){
@@ -68,3 +72,7 @@ Application.set = function(key, val){
 Application.get = function(key){
 	return this.settings[key];
 };
+
+function contains(){
+	// TODO
+}

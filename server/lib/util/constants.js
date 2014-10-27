@@ -7,6 +7,7 @@
 
 module.exports = {
 	RESERVED: {
+		BASE: 'base',
 		ENV: 'env',
 		ENV_PRO: 'production',
 		ENV_DEV: 'development',

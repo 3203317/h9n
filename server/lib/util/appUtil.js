@@ -30,13 +30,11 @@ function checkArgs(args){
 
 function processArgs(app, args){
 	// TODO
-	app.set(Constants.RESERVED.CURRENT_SERVER, args, true)
-	var curServer = app.get(Constants.RESERVED.CURRENT_SERVER);
-	app.set(Constants.RESERVED.STARTID, curServer.id, !0)
+	app.set(Constants.RESERVED.CURRENT_SERVER, args, true);
 }
 
 function setupEnv(app, args){
-	app.set(Constants.RESERVED.ENV, args.env, !0);
+	app.set(Constants.RESERVED.ENV, args.env, true);
 }
 
 function configLogger(app){

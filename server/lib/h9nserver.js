@@ -27,7 +27,7 @@ H9nServer.createApp = function(opts, cb){
 	try{
 		app.init(opts);
 	}catch(e){
-		cb(e);
+		utils.invokeCallback(cb, e);
 		return;
 	}
 
