@@ -32,10 +32,10 @@ var help = [
 	'usage: h9ndefend [action] [options] SCRIPT [script-options]',
 	'',
 	'actions:',
-	'  list                List all running h9ndefend scripts',
+	'  list		List all running h9ndefend scripts',
 	'',
 	'options:',
-	'  -h, --help       You\'re staring at it',
+	'  -h, --help	You\'re staring at it',
 ];
 
 var argvOptions = cli.argvOptions = {
@@ -61,3 +61,5 @@ app.use(flatiron.plugins.cli, {
 app.cmd('help', cli.help = function(){
 	util.puts(help.join('\n'));
 });
+
+app.start();
