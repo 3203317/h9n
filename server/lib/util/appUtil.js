@@ -16,7 +16,6 @@ var exp = module.exports;
 
 exp.defaultConfiguration = function(app){
 	var args = parseArgs(process.argv);
-	check(args);
 	setupEnv(app, args);
 	processArgs(app, args);
 };
@@ -34,8 +33,8 @@ function processArgs(app, args){
 	app.set(Constants.RESERVED.STARTID, curServer.id, !0)
 }
 
-function setupEnv(){
-	// TODO
+function setupEnv(app, args){
+	app.set(Constants.RESERVED.ENV, args.env, !0);
 }
 
 function parseArgs(args){
@@ -61,6 +60,26 @@ function parseArgs(args){
 		}
 
 		argsMap[key] = value
+	}
+
+	argsMap.env = argsMap.env || Constants.RESERVED.ENV_DEV;
+
+	if(argsMap.file){
+		var originPath = path.join(process.env.PWD, argsMap.file);
+		if(fs.existsSync(originPath)){
+			var file = require(originPath);
+			file = file[argsMap.env];
+			for(var i in file){
+				var serverInfo = file[i];
+				argsMap.serverType = i;
+
+				for(var j in serverInfo){
+					argsMap[j] = serverInfo[j];
+				}
+
+				break;
+			}
+		}
 	}
 
 	console.log('[%s] App args: %j.', utils.format(), argsMap)

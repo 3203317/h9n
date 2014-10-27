@@ -7,6 +7,8 @@
 
 module.exports = {
 	RESERVED: {
+		ENV_PRO: 'production',
+		ENV_DEV: 'development',
 		CURRENT_SERVER: 'curServer',
 		STARTID: 'startId'
 	}
