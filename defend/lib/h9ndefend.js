@@ -13,3 +13,4 @@ var fs = require('fs'),
 
 var h9ndefend = exports;
 
+h9ndefend.cli = require('./cli');
