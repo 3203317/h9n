@@ -1,0 +1,15 @@
+{
+  "name": "h9n-defend",
+  "version": "1.0.0",
+  "description": "h9n-defend",
+  "main": "index.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "dependencies": {
+    "flatiron": "*"
+  },
+  "author": "huangxin",
+  "license": "MIT",
+  "homepage": "https://github.com/3203317/h9n"
+}

@@ -7,9 +7,8 @@
 
 var fs = require('fs'),
 	path = require('path'),
-	cp = require('child_process'),
-	exec = cp.exec,
-	spawn = cp.spawn;
+	util = require('util'),
+	flatiron = require('flatiron');
 
-var h9ndefend = exports;
-
+var cli = exports,
+	app = flatiron.app;
