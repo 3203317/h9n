@@ -19,12 +19,13 @@ exp.defaultConfiguration = function(app){
 	checkArgs(args);
 	setupEnv(app, args);
 	processArgs(app, args);
+	configLogger(app);
+	loadLifecycle(app);
 };
 
 function checkArgs(args){
-	if(!args.id){
-		throw new Error('not found server id');
-	}
+	if(!args.id) throw new Error('not found server id');
+	if(!args.serverType) throw new Error('not found server type');
 }
 
 function processArgs(app, args){
@@ -36,6 +37,14 @@ function processArgs(app, args){
 
 function setupEnv(app, args){
 	app.set(Constants.RESERVED.ENV, args.env, !0);
+}
+
+function configLogger(app){
+	// TODO
+}
+
+function loadLifecycle(app){
+	// TODO
 }
 
 function parseArgs(args){
@@ -66,7 +75,7 @@ function parseArgs(args){
 	argsMap.env = argsMap.env || Constants.RESERVED.ENV_DEV;
 
 	if(argsMap.file){
-		var originPath = path.join(process.env.PWD, argsMap.file);
+		var originPath = path.join(path.dirname(argsMap.main), argsMap.file);
 		if(fs.existsSync(originPath)){
 			var file = require(originPath);
 			file = file[argsMap.env];

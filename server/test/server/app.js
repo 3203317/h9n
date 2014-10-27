@@ -27,12 +27,17 @@ uplserv.createApp(null, function (err){
 		console.error('[%s] Create app error: %j.', utils.format(), err.message);
 		return;
 	}
+
 	var self = this;
 	self.set('name', 'uplserv');
-});
 
-//app.start(function (err){
-//	if(err){
-//		console.error('[%s] App start error: %s.', utils.format(), err.message);
-//	}
-//});
+	self.configure('production|development', function(){
+		console.log(arguments);
+	});
+
+	self.start(function (err){
+		if(err){
+			console.error('[%s] App start error: %s.', utils.format(), err.message);
+		}
+	});
+});
