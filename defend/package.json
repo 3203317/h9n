@@ -10,6 +10,9 @@
     "colors": "*",
     "flatiron": "*"
   },
+  "bin": {
+    "h9ndefend": "./bin/h9ndefend"
+  },
   "author": "huangxin",
   "license": "MIT",
   "homepage": "https://github.com/3203317/h9n"
