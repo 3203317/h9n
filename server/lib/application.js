@@ -73,6 +73,36 @@ Application.get = function(key){
 	return this.settings[key];
 };
 
-function contains(){
-	// TODO
+Application.filter = function(filter){
+	this.before(filter);
+	this.after(filter);
+};
+
+Application.before = function(filter){
+	addFilter(this, Constants.KEYWORDS.BEFORE_FILTER, filter);
+};
+
+Application.after = function(filter){
+	addFilter(this, Constants.KEYWORDS.AFTER_FILTER, filter);
+};
+
+function addFilter(app, type, filter){
+        var filters = app.get(type);
+        if(!filters){
+                filters = [];
+                app.set(type, filters);
+        }
+        filters.push(filter);
+}
+
+function contains(str, settings){
+        if(!settings) return false;
+
+        var ts = settings.split('|');
+
+        for(var i in ts){
+                if(str === ts[i]) return true;
+        }
+
+        return false;
 }

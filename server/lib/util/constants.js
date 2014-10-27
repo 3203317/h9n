@@ -6,7 +6,10 @@
 'use strict';
 
 module.exports = {
-	RESERVED: {
+	KEYWORDS: {
+		BEFORE_FILTER: '__befores__',
+		AFTER_FILTER: '__afters__'
+	}, RESERVED: {
 		BASE: 'base',
 		ENV: 'env',
 		ENV_PRO: 'production',
