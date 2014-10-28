@@ -25,6 +25,8 @@ h9ndefend.log = function(){};
 
 h9ndefend.log.info = function(){};
 
+
+h9ndefend.initialized = false;
 h9ndefend.root = process.env.H9NDEFEND_ROOT || path.join(process.env.HOME || process.env.USERPROFILE || '/root', '.h9ndefend');
 h9ndefend.config = new nconf.File({ file: path.join(h9ndefend.root, 'config.json') });
 h9ndefend.cli = require('./cli');
@@ -45,8 +47,9 @@ h9ndefend.load = function(options){
 	options = options || {};
 	options.logLength = options.logLength || 100;
 	options.logStream = options.logStream || false;
-	options.root = options.root || h9ndefend.root;
-	options.pidPath = options.pidPath || path.join(options.root);
+	options.root      = options.root      || h9ndefend.root;
+	options.pidPath   = options.pidPath   || path.join(options.root, 'pids');
+	options.sockPath  = options.sockPath  || path.join(options.root, 'sock');
 
 	h9ndefend.config = new nconf.File({ file: path.join(options.root, 'config.json') });
 
@@ -76,6 +79,11 @@ h9ndefend.load = function(options){
 	h9ndefend.config.set('logLength', options.logLength);
 	h9ndefend.config.set('logStream', options.logStream);
 	h9ndefend.config.set('columns', options.columns);
+
+	options.debug = options.debug || h9ndefend.config.get('debug') || false;
+	if(options.debug){
+		// TODO
+	}
 
 	tryCreate(h9ndefend.config.get('root'));
 	tryCreate(h9ndefend.config.get('pidPath'));
