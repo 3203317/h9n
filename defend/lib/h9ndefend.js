@@ -17,6 +17,8 @@ var nconf = require('nconf'),
 	mkdirp = utile.mkdirp,
 	async = utile.async;
 
+var utils = require('../../shared/utils');
+
 var h9ndefend = exports;
 
 h9ndefend.log = function(){};
@@ -38,6 +40,66 @@ h9ndefend.format = function(format, procs){
 
 	// TODO
 };
+
+h9ndefend.load = function(options){
+	options = options || {};
+	options.logLength = options.logLength || 100;
+	options.logStream = options.logStream || false;
+	options.root = options.root || h9ndefend.root;
+	options.pidPath = options.pidPath || path.join(options.root);
+
+	h9ndefend.config = new nconf.File({ file: path.join(options.root, 'config.json') });
+
+	try{
+		h9ndefend.config.loadSync();
+	}catch(e){
+		console.error('[%s] Load config error: %j.', utils.format(), e);
+	}
+
+	options.columns  = options.columns  || h9ndefend.config.get('columns');
+	if(!options.columns){
+		options.columns = [
+			'uid',
+			'command',
+			'script',
+			'h9ndefend',
+			'pid',
+			'id',
+			'logfile',
+			'uptime'
+		];
+	}
+
+	h9ndefend.config.set('root', options.root);
+	h9ndefend.config.set('pidPath', options.pidPath);
+	h9ndefend.config.set('sockPath', options.sockPath);
+	h9ndefend.config.set('logLength', options.logLength);
+	h9ndefend.config.set('logStream', options.logStream);
+	h9ndefend.config.set('columns', options.columns);
+
+	tryCreate(h9ndefend.config.get('root'));
+	tryCreate(h9ndefend.config.get('pidPath'));
+	tryCreate(h9ndefend.config.get('sockPath'));
+
+	try {
+		h9ndefend.config.saveSync();
+	}
+	catch(e){
+		console.error('[%s] Try save error: %j.', utils.format(), e);
+	}
+
+	h9ndefend.initialized = true;
+};
+
+function tryCreate(dir){
+	if(!dir) return;
+	try{
+		fs.mkdirSync(dir, '0755');
+	}
+	catch(e){
+		console.error('[%s] Try create %j error: %j.', utils.format(), dir, e);
+	}
+}
 
 function getAllProcesses(cb){
 	var sockPath = h9ndefend.config.get('sockPath');
@@ -70,3 +132,5 @@ function getSockets(sockPath, cb){
 function getProcess(name, next){
 	// TODO
 }
+
+h9ndefend.load();
