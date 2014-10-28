@@ -7,10 +7,12 @@
 
 var fs = require('fs'),
 	path = require('path'),
-	util = require('util'),
-	flatiron = require('flatiron');
+	util = require('util');
+
+var flatiron = require('flatiron');
 
 var cli = exports,
+	h9ndefend = require('./h9ndefend'),
 	app = flatiron.app;
 
 var actions = [
