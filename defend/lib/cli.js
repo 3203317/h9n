@@ -39,8 +39,7 @@ var help = [
 	'  list		List all running h9ndefend scripts',
 	'',
 	'options:',
-	'  -h, --help	You\'re staring at it',
-	''
+	'  -h, --help	You\'re staring at it'
 ];
 
 var argvOptions = cli.argvOptions = {
@@ -67,8 +66,18 @@ app.cmd('help', cli.help = function(){
 	util.puts(help.join('\n'));
 });
 
+app.cmd('list', cli.list = function(){
+	h9ndefend.list(true, function (err, processes){
+		if(processes){
+			h9ndefend.log.info('h9ndefend processes running');
+		}else{
+			h9ndefend.log.info('no h9ndefend processes running');
+		}
+	});
+});
+
 cli.start = function(){
 	app.init(function(){
 		app.start();
 	});
-}
+};

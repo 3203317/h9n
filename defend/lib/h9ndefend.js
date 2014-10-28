@@ -14,3 +14,8 @@ var fs = require('fs'),
 var h9ndefend = exports;
 
 h9ndefend.cli = require('./cli');
+
+
+h9ndefend.list = function(format, cb){
+	console.log('list')
+};
