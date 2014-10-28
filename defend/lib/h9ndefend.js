@@ -35,6 +35,17 @@ h9ndefend.root = process.env.H9NDEFEND_ROOT || path.join(process.env.HOME || pro
 h9ndefend.config = new nconf.File({ file: path.join(h9ndefend.root, 'config.json') });
 h9ndefend.cli = require('./cli');
 
+h9ndefend.stat = function(logFile, script, cb){
+	var logAppend;
+
+	if(4 === arguments.length){
+		logAppend = cb;
+		cb = arguments[3];
+	}
+
+	// TODO
+};
+
 h9ndefend.list = function(format, cb){
 	getAllProcesses(function (processes){
 		cb(null, h9ndefend.format(format, processes));

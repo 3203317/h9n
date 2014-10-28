@@ -14,7 +14,7 @@ var flatiron = require('flatiron');
 var cli = exports,
 	h9ndefend = require('./h9ndefend'),
 	utils = require('../../shared/utils'),
-	console = h9ndefend.log,
+	_console = h9ndefend.log,
 	app = flatiron.app;
 
 var actions = [
@@ -66,6 +66,24 @@ app.use(flatiron.plugins.cli, {
 	usage: help
 });
 
+function tryStart(file, options, cb){
+	var fullLog, fullScript;
+
+	if(options.path){
+		h9ndefend.config.set('root', options.path);
+		h9ndefend.root = options.path;
+	}
+
+	h9ndefend.stat(fullLog, fullScript, options.append, function (err){
+		if(err){
+			_console.error('[%s] Cannot start h9ndefend.', utils.format());
+			_console.error('[%s] %j.', err.message);
+			process.exit(-1);
+		}
+		cb();
+	});
+}
+
 app.cmd('help', cli.help = function(){
 	util.puts(help.join('\n'));
 });
@@ -74,15 +92,19 @@ app.cmd(/start (.+)/, cli.startDaemon = function(){
 	var file = app.argv._[1],
 		options = getOptions(file);
 
-	console.info('[%s] H9ndefend processing file: %s.', utils.format(), file.grey);
+	_console.info('[%s] H9ndefend processing file: %s.', utils.format(), file.grey);
+
+	tryStart(file, options, function(){
+		h9ndefend.startDaemon(file, options);
+	});
 });
 
 app.cmd('list', cli.list = function(){
 	h9ndefend.list(true, function (err, processes){
 		if(processes){
-			console.info('[%s] H9ndefend processes is running.', utils.format());
+			_console.info('[%s] H9ndefend processes is running.', utils.format());
 		}else{
-			console.warn('[%s] H9ndefend processes is not running.', utils.format());
+			_console.warn('[%s] H9ndefend processes is not running.', utils.format());
 		}
 	});
 });
@@ -93,7 +115,36 @@ cli.start = function(){
 	});
 };
 
-
-var getOptions = cli.getOptions = function (file){
+var getOptions = cli.getOptions = function(file){
 	var options = {};
+	options.options = process.argv.splice(process.argv.indexOf(file) + 1);
+
+	app.config.stores.argv.store = {};
+	app.config.use('argv', argvOptions);
+
+	[
+		'pidFile',
+		'logFile',
+		'errFile',
+		'watch',
+		'minUptime',
+		'append',
+		'silent',
+		'outFile',
+		'max',
+		'command',
+		'path',
+		'spinSleepTime',
+		'sourceDir',
+		'uid',
+		'watchDirectory',
+		'watchIgnore',
+		'killTree',
+		'killSignal',
+		'id'
+	].forEach(function (key){
+		options[key] = app.config.get(key);
+	});
+
+	return options;
 };
