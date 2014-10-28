@@ -11,7 +11,11 @@ var fs = require('fs'),
 	exec = cp.exec,
 	spawn = cp.spawn;
 
-var nconf = require('nconf');
+var nconf = require('nconf'),
+	utile = require('utile'),
+	winston = require('winston'),
+	mkdirp = utile.mkdirp,
+	async = utile.async;
 
 var h9ndefend = exports;
 
@@ -24,19 +28,28 @@ h9ndefend.config = new nconf.File({ file: path.join(h9ndefend.root, 'config.json
 h9ndefend.cli = require('./cli');
 
 h9ndefend.list = function(format, cb){
-	console.log(process.env)
 	getAllProcesses(function (processes){
-		cb(null);
+		cb(null, h9ndefend.format(format, processes));
 	});
 };
 
-function getAllProcesses(cb){
+h9ndefend.format = function(format, procs){
+	if(!procs || 0 === procs.length) return;
 
-	getSockets(null, function (err, cb){
-		if(err){
+	// TODO
+};
+
+function getAllProcesses(cb){
+	var sockPath = h9ndefend.config.get('sockPath');
+
+	getSockets(sockPath, function (err, sockets){
+		if(err || (sockets && 0 === sockets.length)){
 			cb(err);
 			return;
 		}
+		async.map(sockets, getProcess, function (err, processes){
+			cb(processes.filter(Boolean));
+		});
 	});
 }
 
@@ -44,12 +57,16 @@ function getSockets(sockPath, cb){
 	var sockets;
 
 	try{
-		sockets = fs.readdirSync();
+		sockets = fs.readdirSync(sockPath);
 	}catch(e){
-		if('ENOENT' != e.code){
+		if('ENOENT' !== e.code){
 			cb(e);
 			return;
 		}
 	}
 	cb(null, sockets);
+}
+
+function getProcess(name, next){
+	// TODO
 }

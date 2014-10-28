@@ -9,6 +9,8 @@
   "dependencies": {
     "colors": "*",
     "nconf": "*",
+    "utile": "*",
+    "winston": "*",
     "flatiron": "*"
   },
   "bin": {
