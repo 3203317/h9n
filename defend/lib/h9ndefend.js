@@ -105,7 +105,7 @@ function tryCreate(dir){
 		fs.mkdirSync(dir, '0755');
 	}
 	catch(e){
-		console.error('[%s] Try create %j error: %j.', utils.format(), dir, e);
+		// console.error('[%s] Try create %j error: %j.', utils.format(), dir, e);
 	}
 }
 
