@@ -21,9 +21,13 @@ var utils = require('../../shared/utils');
 
 var h9ndefend = exports;
 
-h9ndefend.log = function(){};
+var console = h9ndefend.log = new (winston.Logger)({
+	transports: [
+		new (winston.transports.Console)()
+	]
+});
 
-h9ndefend.log.info = function(){};
+h9ndefend.log.cli();
 
 
 h9ndefend.initialized = false;

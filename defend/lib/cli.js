@@ -13,6 +13,8 @@ var flatiron = require('flatiron');
 
 var cli = exports,
 	h9ndefend = require('./h9ndefend'),
+	utils = require('../../shared/utils'),
+	console = h9ndefend.log,
 	app = flatiron.app;
 
 var actions = [
@@ -68,12 +70,19 @@ app.cmd('help', cli.help = function(){
 	util.puts(help.join('\n'));
 });
 
+app.cmd(/start (.+)/, cli.startDaemon = function(){
+	var file = app.argv._[1],
+		options = getOptions(file);
+
+	console.info('[%s] H9ndefend processing file: %s.', utils.format(), file.grey);
+});
+
 app.cmd('list', cli.list = function(){
 	h9ndefend.list(true, function (err, processes){
 		if(processes){
-			h9ndefend.log.info('h9ndefend processes running');
+			console.info('[%s] H9ndefend processes is running.', utils.format());
 		}else{
-			h9ndefend.log.info('no h9ndefend processes running');
+			console.warn('[%s] H9ndefend processes is not running.', utils.format());
 		}
 	});
 });
@@ -82,4 +91,9 @@ cli.start = function(){
 	app.init(function(){
 		app.start();
 	});
+};
+
+
+var getOptions = cli.getOptions = function (file){
+	var options = {};
 };
