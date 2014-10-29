@@ -16,17 +16,11 @@ var exp = module.exports;
 
 exp.defaultConfiguration = function(app){
 	var args = parseArgs(process.argv);
-	checkArgs(args);
 	setupEnv(app, args);
 	processArgs(app, args);
 	configLogger(app);
 	loadLifecycle(app);
 };
-
-function checkArgs(args){
-	if(!args.id) throw new Error('not found server id');
-	if(!args.serverType) throw new Error('not found server type');
-}
 
 function processArgs(app, args){
 	// TODO

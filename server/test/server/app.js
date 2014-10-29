@@ -9,9 +9,7 @@ var utils = require('../../../shared/utils'),
 	uplserv = require('../../');
 
 process.on('uncaughtException', function (err){
-	if(err){
-		console.error('[%s] Caught exception: %j.', utils.format(), err.stack);
-	}
+	console.error('[%s] Caught exception: %j.', utils.format(), err.stack);
 });
 
 process.on('exit', function (code){
@@ -22,12 +20,7 @@ process.on('exit', function (code){
 	console.error('[%s] Process exit with code: %s.', utils.format(), code)
 });
 
-uplserv.createApp(null, function (err){
-	if(err){
-		console.error('[%s] Create app error: %j.', utils.format(), err.message);
-		return;
-	}
-
+uplserv.createApp(null, function(){
 	var self = this;
 	self.set('name', 'uplserv');
 

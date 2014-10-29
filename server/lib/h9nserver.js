@@ -23,14 +23,7 @@ var self = this;
 
 H9nServer.createApp = function(opts, cb){
 	var app = application;
-
-	try{
-		app.init(opts);
-	}catch(e){
-		utils.invokeCallback(cb, e);
-		return;
-	}
-
+	app.init(opts);
 	self.app = app;
 	cb.bind(app)();
 };

@@ -32,7 +32,6 @@ Application.init = function(opts){
 
 	self.event = new EventEmitter();
 	self.state = STATE_INITED;
-
 	console.log('[%s] App inited: %j.', utils.format(), self.getServerId());
 };
 
