@@ -29,6 +29,10 @@ uplserv.createApp(null, function(){
 		self.filter(uplserv.timeout());
 	});
 
+        self.configure('production|development', 'uplserv', function(){
+		// TODO
+	});
+
 	self.start(function (err){
 		if(err){
 			console.error('[%s] App start error: %s.', utils.format(), err.message);

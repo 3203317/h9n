@@ -23,8 +23,9 @@ exp.defaultConfiguration = function(app){
 };
 
 function processArgs(app, args){
-	// TODO
-	app.set(Constants.RESERVED.CURRENT_SERVER, args, true);
+	for(var i in args){
+		app.set(i, args[i]);
+	}
 }
 
 function setupEnv(app, args){

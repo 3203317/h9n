@@ -19,7 +19,7 @@ Filter.prototype.before = function(msg, session, next){
 }
 
 Filter.prototype.after = function(err, msg, session, resp, next){
-	var start = session.__startTime
+	var start = session.__startTime__;
 	if('number' === typeof start){
 		var timeUsed = Date.now() - start
 		var log = {

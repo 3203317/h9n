@@ -60,7 +60,7 @@ Application.configure = function (env, type, fn){
 };
 
 Application.getServerId = function(){
-	return this.get(Constants.RESERVED.CURRENT_SERVER).id;
+	return this.get(Constants.RESERVED.ID);
 };
 
 Application.set = function(key, val){
