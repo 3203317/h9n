@@ -25,7 +25,8 @@ uplserv.createApp(null, function(){
 	self.set('name', 'uplserv');
 
 	self.configure('production|development', function(){
-		console.log(arguments);
+		self.filter(uplserv.time());
+		self.filter(uplserv.timeout());
 	});
 
 	self.start(function (err){

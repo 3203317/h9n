@@ -34,6 +34,13 @@ Object.defineProperty(H9nServer, 'app', {
 	}
 });
 
+fs.readdirSync(__dirname +'/filters/handler').forEach(function (filename){
+        if(!/\.js$/.test(filename)) return
+        var name = path.basename(filename, '.js')
+        var _load = load.bind(null, './filters/handler/', name)
+        Object.defineProperty(H9nServer, name, { get: _load })
+});
+
 function load(path, name){
 	if(name) return require(path + name);
 	return require(path);
