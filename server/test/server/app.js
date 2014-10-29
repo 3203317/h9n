@@ -29,7 +29,10 @@ uplserv.createApp(null, function(){
 	});
 
         self.configure('production|development', 'uplserv', function(){
-		// TODO
+		self.set('connectorConfig', {
+			connector: uplserv.connectors.hyxconnector,
+			heartbeat: 3
+		})
 	});
 
 	self.start(function (err){

@@ -30,6 +30,8 @@ Application.init = function(opts){
 	var base = opts.base || path.dirname(require.main.filename);
 	self.set(Constants.RESERVED.BASE, base, true);
 
+	self.loaded = [];
+	self.components = [];
 	self.event = new EventEmitter();
 	self.state = STATE_INITED;
 	console.log('[%s] App inited: %j.', utils.format(), self.getServerId());
@@ -109,6 +111,10 @@ Application.before = function(filter){
 
 Application.after = function(filter){
 	addFilter(this, Constants.KEYWORDS.AFTER_FILTER, filter);
+};
+
+Application.getCurServer = function(){
+	return this.settings;
 };
 
 function addFilter(app, type, filter){

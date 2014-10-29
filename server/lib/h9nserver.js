@@ -34,6 +34,17 @@ Object.defineProperty(H9nServer, 'app', {
 	}
 });
 
+Object.defineProperty(H9nServer.connectors, 'hyxconnector', {
+	get: load.bind(null, './connectors/hyxconnector')
+});
+
+fs.readdirSync(__dirname +'/components').forEach(function (filename){
+	if(!/\.js$/.test(filename)) return
+	var name = path.basename(filename, '.js')
+	var _load = load.bind(null, './components/', name)
+	Object.defineProperty(H9nServer, name, { get: _load })
+})
+
 fs.readdirSync(__dirname +'/filters/handler').forEach(function (filename){
         if(!/\.js$/.test(filename)) return
         var name = path.basename(filename, '.js')
