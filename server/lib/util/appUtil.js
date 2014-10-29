@@ -22,6 +22,14 @@ exp.defaultConfiguration = function(app){
 	loadLifecycle(app);
 };
 
+exp.loadDefaultComponents = function(app){
+	console.log(app)
+};
+
+exp.startByType = function(app, cb){
+	utils.invokeCallback(cb);
+}
+
 function processArgs(app, args){
 	for(var i in args){
 		app.set(i, args[i]);

@@ -42,7 +42,33 @@ Application.start = function(cb){
 		utils.invokeCallback(cb, new Error('app has already start'));
 		return;
 	}
+
+	appUtil.startByType(self, function(){
+		appUtil.loadDefaultComponents(self);
+	});
 };
+
+Application.load = function(name, component, opts){
+	if('string' !== typeof name){
+		opts = component
+		component = name
+		name = null
+	}
+
+	if('function' === typeof component){
+		component = component(this, opts)
+	}
+
+	if(!name && 'string' === typeof component.name){
+		name = component.name
+	}
+
+	if(name && this.components[name]) return;
+
+	this.loaded.push(component)
+
+	if(name) this.components[name] = component
+}
 
 Application.configure = function (env, type, fn){
 	var args = [].slice.call(arguments);

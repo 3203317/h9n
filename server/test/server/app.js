@@ -22,7 +22,6 @@ process.on('exit', function (code){
 
 uplserv.createApp(null, function(){
 	var self = this;
-	self.set('name', 'uplserv');
 
 	self.configure('production|development', function(){
 		self.filter(uplserv.time());

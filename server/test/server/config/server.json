@@ -1,19 +1,17 @@
 {
 	"development": {
 		"uplserv": {
-			"id": "connector-server-1",
+			"id": "uplserv-server-1",
 			"host": "127.0.0.1",
 			"port": 5001,
-			"clientPort": 6001,
-			"fontend": true
+			"clientPort": 6001
 		}
 	}, "production": {
 		"uplserv": {
-			"id": "connector-server-1",
+			"id": "uplserv-server-1",
 			"host": "127.0.0.1",
 			"port": 5001,
-			"clientPort": 6001,
-			"fontend": true
+			"clientPort": 6001
                 }
         }
 }
