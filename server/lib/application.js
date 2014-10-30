@@ -11,6 +11,7 @@ var path = require('path'),
 
 var utils = require('../../shared/utils'),
 	appUtil = require('./util/appUtil'),
+	events = require('./util/events'),
 	Constants = require('./util/constants');
 
 var Application = module.exports = {};
@@ -66,7 +67,24 @@ Application.start = function(cb){
 };
 
 Application.afterStart = function(cb){
-	// TODO
+	var self = this;
+	if(self.state !== STATE_START){
+		utils.invokeCallback(cb, new Error('app is not running now.'))
+		return;
+	}
+
+	appUtil.optComponents(self.loaded, Constants.RESERVED.AFTER_START, function (err){
+		if(err){
+			utils.invokeCallback(cb, err);
+			return;
+		}
+
+		self.state = STATE_STARTED;
+		var id = self.getServerId();
+		var usedTime = Date.now() - self.startTime;
+		console.log('[%s] App startup: %j, ms: %s.', utils.format(), id, usedTime);
+		self.event.emit(events.START_SERVER, id);
+	});
 }
 
 Application.load = function(name, component, opts){

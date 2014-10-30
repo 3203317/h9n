@@ -26,7 +26,7 @@ pro.start = function(cb){
 
 pro.afterStart = function(cb){
 	var self = this;
-	self.connector.start();
+	self.connector.start(cb);
 	self.connector.on('connection', hostFilter.bind(self, bindEvents));
 };
 
