@@ -33,9 +33,8 @@ exp.startByType = function(app, cb){
 }
 
 function processArgs(app, args){
-	for(var i in args){
-		app.set(i, args[i]);
-	}
+	delete args.env;
+	app.set(Constants.RESERVED.CURRENT_SERVER, args);
 }
 
 function setupEnv(app, args){

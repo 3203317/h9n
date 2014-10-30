@@ -81,14 +81,14 @@ Application.configure = function (env, type, fn){
 	if(1 < args.length) type = args[1];
 
 	if(env === Constants.RESERVED.ALL || contains(this.settings.env, env)){
-		if(type === Constants.RESERVED.ALL || contains(this.settings.serverType, type)){
+		if(type === Constants.RESERVED.ALL || contains(this.getCurServer().serverType, type)){
 			fn.call(this)
 		}
 	}
 };
 
 Application.getServerId = function(){
-	return this.get(Constants.RESERVED.ID);
+	return this.get(Constants.RESERVED.CURRENT_SERVER).id;
 };
 
 Application.set = function(key, val){
@@ -114,7 +114,7 @@ Application.after = function(filter){
 };
 
 Application.getCurServer = function(){
-	return this.settings;
+	return this.settings.curServer;
 };
 
 function addFilter(app, type, filter){
