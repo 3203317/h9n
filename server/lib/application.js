@@ -23,6 +23,7 @@ var STATE_STOPED  = 4;	// app has stoped
 
 Application.init = function(opts){
 	var self = this;
+	self.startTime = Date.now();
 	opts = opts || {};
 	self.settings = {};
 
@@ -40,7 +41,6 @@ Application.init = function(opts){
 
 Application.start = function(cb){
 	var self = this;
-	self.startTime = Date.now();
 	if(self.state > STATE_INITED){
 		utils.invokeCallback(cb, new Error('app has already start'));
 		return;
