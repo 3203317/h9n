@@ -5,6 +5,8 @@
  */
 'use strict';
 
+var utils = require('../../../shared/utils');
+
 module.exports = function(app, opts){
 	return new Component(app, opts)
 }
@@ -61,10 +63,21 @@ function getDefaultConnector(app, opts){
 	return new DefaultConnector(curServer, opts);
 }
 
-function hostFilter(){
-	// TODO
+function hostFilter(cb, socket){
+	var self = this;
+	utils.invokeCallback(cb, self, socket);
 }
 
-function bindEvents(){
-	// TODO
+function bindEvents(self, socket){
+	socket.on('disconnect', function(){
+		console.log('[%s] Client socket is closed.', utils.format());
+	});
+
+	socket.on('error', function (err){
+		console.log('[%s] Client socket error: %j.', utils.format(), err);
+	});
+
+	socket.on('message', function (msg){
+		console.log('[%s] Client socket msg: %j.', utils.format(), msg);
+	});
 }
