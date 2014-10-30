@@ -47,7 +47,7 @@ pro.start = function(cb){
 };
 
 pro.stop = function(force, cb){
-	this.tcpServer.close();
+	if(this.tcpServer) this.tcpServer.close();
 	process.nextTick(cb);
 }
 

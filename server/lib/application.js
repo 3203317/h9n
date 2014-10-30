@@ -84,6 +84,7 @@ Application.afterStart = function(cb){
 		var usedTime = Date.now() - self.startTime;
 		console.log('[%s] App startup: %j, ms: %s.', utils.format(), id, usedTime);
 		self.event.emit(events.START_SERVER, id);
+		utils.invokeCallback(cb);
 	});
 }
 

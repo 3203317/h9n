@@ -28,7 +28,7 @@ uplserv.createApp(null, function(){
 		self.filter(uplserv.timeout());
 	});
 
-        self.configure('production|development', 'uplserv', function(){
+	self.configure('production|development', 'uplserv', function(){
 		self.set('connectorConfig', {
 			connector: uplserv.connectors.hyxconnector,
 			heartbeat: 3
@@ -38,6 +38,7 @@ uplserv.createApp(null, function(){
 	self.start(function (err){
 		if(err){
 			console.error('[%s] App start error: %s.', utils.format(), err.message);
+			return;
 		}
 	});
 });
