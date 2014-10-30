@@ -10,6 +10,7 @@ module.exports = {
 		BEFORE_FILTER: '__befores__',
 		AFTER_FILTER: '__afters__'
 	}, RESERVED: {
+		START: 'start',
 		ID: 'id',
 		BASE: 'base',
 		ENV: 'env',

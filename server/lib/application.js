@@ -47,8 +47,27 @@ Application.start = function(cb){
 
 	appUtil.startByType(self, function(){
 		appUtil.loadDefaultComponents(self);
+
+		function startUp(){
+			appUtil.optComponents(self.loaded, Constants.RESERVED.START, function (err){
+				if(err){
+					utils.invokeCallback(cb, err);
+					return;
+				}
+
+				self.state = STATE_START;
+				// console.log('[%s] App startUp.', utils.format());
+				self.afterStart(cb);
+			});
+		}
+
+		startUp();
 	});
 };
+
+Application.afterStart = function(cb){
+	// TODO
+}
 
 Application.load = function(name, component, opts){
 	if('string' !== typeof name){

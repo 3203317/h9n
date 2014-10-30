@@ -32,6 +32,21 @@ exp.startByType = function(app, cb){
 	utils.invokeCallback(cb);
 }
 
+exp.optComponents = function(comps, method, cb){
+	async.forEachSeries(comps, function (comp, done){
+		if('function' === typeof comp[method]){
+			comp[method](done);
+			return;
+		}
+		done()
+	}, function (err){
+		if(err){
+			console.error('[%s] Operate component fail, method: %s, err: %j.', utils.format(), method, err)
+		}
+		utils.invokeCallback(cb, err)
+	})
+};
+
 function processArgs(app, args){
 	delete args.env;
 	app.set(Constants.RESERVED.CURRENT_SERVER, args);
