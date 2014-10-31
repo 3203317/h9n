@@ -24,7 +24,8 @@ var Socket = function(id, socket){
 
 	socket.once('close', self.emit.bind(self, 'disconnect'));
 	socket.on('error', self.emit.bind(self, 'error'));
-
+	socket.on('data', ondata.bind(self));
+	socket.on('end', onend.bind(self));
 	self.state = ST_INITED;
 }
 
@@ -40,4 +41,14 @@ pro.disconnect = function(){
 	self.state = ST_CLOSED;
 	self.socket.emit('close');
 	self.socket.close();
+}
+
+function ondata(chunk){
+        var self = this;
+        self.emit('message', chunk);
+}
+
+function onend(chunk){
+	var self = this;
+	console.log(chunk);
 }

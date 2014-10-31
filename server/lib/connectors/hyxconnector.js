@@ -24,6 +24,7 @@ var Connector = function(server, opts){
 
 	self.opts = opts || {};
 	self.server = server;
+	self.distinctHost = opts.distinctHost;
 	self.ssl = opts.ssl;
 };
 
@@ -39,9 +40,11 @@ pro.start = function(cb){
 	if(!self.ssl){
 		var tcpServer = self.tcpServer = net.createServer();
 		tcpServer.on('connection', newSocket.bind(self));
-		tcpServer.listen(self.server.clientPort, function(){
-			console.log('[%s] TcpServer started: %j.', utils.format(), self.server.id);
-		});
+		if(self.distinctHost){
+			tcpServer.listen(self.server.clientPort, self.server.host, started.bind(self));
+		}else{
+			tcpServer.listen(self.server.clientPort, started.bind(self));
+		}
 	}
 	process.nextTick(cb)
 };
@@ -60,4 +63,8 @@ function gensocket(socket){
 	var self = this;
 	var hyxsocket = new HyxSocket(curId++, socket);
 	self.emit('connection', hyxsocket);
+}
+
+function started(){
+	console.log('[%s] TcpServer started: %j.', utils.format(), this.server.id);
 }
