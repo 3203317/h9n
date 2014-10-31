@@ -10,6 +10,7 @@ var util = require('util'),
 	net = require('net');
 
 var utils = require('../../../shared/utils'),
+	Switcher = require('./hyx/switcher'),
 	HyxSocket = require('./hyxsocket');
 
 var curId = 1;
@@ -39,7 +40,8 @@ pro.start = function(cb){
 
 	if(!self.ssl){
 		var tcpServer = self.tcpServer = net.createServer();
-		tcpServer.on('connection', newSocket.bind(self));
+		self.switcher = new Switcher(tcpServer, self.opts);
+		self.switcher.on('connection', newSocket.bind(self));
 		if(self.distinctHost){
 			tcpServer.listen(self.server.clientPort, self.server.host, started.bind(self));
 		}else{
