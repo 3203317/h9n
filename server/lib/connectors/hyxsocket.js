@@ -8,7 +8,8 @@
 var util = require('util'),
 	EventEmitter = require('events').EventEmitter;
 
-var utils = require('../../../shared/utils');
+var utils = require('../../../shared/utils'),
+	handler = require('../common/handler');
 
 var ST_INITED = 0,
 	ST_WAIT_ACK = 1,
@@ -24,8 +25,8 @@ var Socket = function(id, socket){
 
 	socket.once('close', self.emit.bind(self, 'disconnect'));
 	socket.on('error', self.emit.bind(self, 'error'));
-	socket.on('data', ondata.bind(self));
-	socket.on('end', onend.bind(self));
+	socket.on('message', onmessage.bind(self));
+
 	self.state = ST_INITED;
 }
 
@@ -43,12 +44,11 @@ pro.disconnect = function(){
 	self.socket.close();
 }
 
-function ondata(chunk){
-        var self = this;
-        self.emit('message', chunk);
-}
-
-function onend(chunk){
-	var self = this;
-	console.log(chunk);
+function onmessage(msg){
+	if(msg){
+		handler(this, {
+			type: 4,
+			msg: msg
+		});
+	}
 }

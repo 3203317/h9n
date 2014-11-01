@@ -23,6 +23,11 @@ var Socket = function(socket, opts){
 	Stream.call(self);
 	self.socket = socket;
 
+	self.socket.on('data', ondata.bind(self));
+	self.socket.on('end', onend.bind(self));
+	self.socket.on('error', self.emit.bind(self, 'error'));
+	self.socket.on('close', self.emit.bind(self, 'close'));
+
 	self.state = ST_HEAD;
 }
 
@@ -37,5 +42,33 @@ pro.send = function(msg, encode, cb){
 }
 
 pro.close = function(){
-	// TODO
+	try{
+		this.socket.destroy();
+	}catch(e){
+		console.error('[%s] Socket close with destroy error: %j.', utils.format(), e.stack);
+	}
+}
+
+function ondata(chunk){
+	var self = this;
+
+	if(socket.state === ST_CLOSED){
+		throw new Error('socket has closed');
+	}
+
+	return true;
+}
+
+function onend(chunk){
+	if(chunk){
+		this.socket.write(chunk);
+	}
+
+	this.state = ST_CLOSED;
+	reset(this)
+	this.emit('end');
+}
+
+function reset(socket){
+	socket.state = ST_HEAD;
 }

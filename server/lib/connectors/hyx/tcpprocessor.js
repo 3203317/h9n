@@ -8,7 +8,8 @@
 var util = require('util'),
         EventEmitter = require('events').EventEmitter;
 
-var utils = require('../../../../shared/utils');
+var utils = require('../../../../shared/utils'),
+	TcpSocket = require('./tcpsocket');
 
 var ST_STARTED = 1;
 var ST_CLOSED = 2;
