@@ -23,10 +23,10 @@ var Socket = function(socket, opts){
 	Stream.call(self);
 	self.socket = socket;
 
-	self.socket.on('data', ondata.bind(self));
-	self.socket.on('end', onend.bind(self));
-	self.socket.on('error', self.emit.bind(self, 'error'));
-	self.socket.on('close', self.emit.bind(self, 'close'));
+	socket.on('data', ondata.bind(self));
+	socket.on('end', onend.bind(self));
+	socket.on('error', self.emit.bind(self, 'error'));
+	socket.on('close', self.emit.bind(self, 'close'));
 
 	self.state = ST_HEAD;
 }
@@ -52,10 +52,11 @@ pro.close = function(){
 function ondata(chunk){
 	var self = this;
 
-	if(socket.state === ST_CLOSED){
+	if(self.state === ST_CLOSED){
 		throw new Error('socket has closed');
 	}
 
+	self.emit('message', chunk);
 	return true;
 }
 

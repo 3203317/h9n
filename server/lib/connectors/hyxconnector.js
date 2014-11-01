@@ -59,7 +59,7 @@ pro.stop = function(force, cb){
 }
 
 function newSocket(socket){
-	console.log('[%s] New socket: %s:%s.', utils.format(), socket.remoteAddress, socket.remotePort);
+	console.log('[%s] New socket: %s:%s.', utils.format(), socket.socket.remoteAddress, socket.socket.remotePort);
 	gensocket.bind(this, socket)();
 }
 

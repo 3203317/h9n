@@ -38,6 +38,7 @@ var Switcher = function(server /* raw */, opts){
 	self.tcpprocessor = new TCPProcessor(opts.closeMethod);
 
 	self.server.on('connection', newSocket.bind(self));
+	self.tcpprocessor.on('connection', self.emit.bind(self, 'connection'));
 
 	self.state = ST_STARTED;
 }

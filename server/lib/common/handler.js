@@ -15,7 +15,7 @@ var ST_WORKING = 2;
 var ST_CLOSED = 3;
 
 var handleData = function(socket, pkg){
-	if(socket.state !== ST_WORKING) return;
+//	if(socket.state !== ST_WORKING) return;
 	socket.emit('message', pkg);
 }
 
