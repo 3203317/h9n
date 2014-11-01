@@ -8,8 +8,7 @@
 var fs = require('fs'),
 	path = require('path');
 
-var application = require('./application'),
-	utils = require('../../shared/utils');
+var application = require('./application');
 
 var H9nServer = module.exports = {
 	version: '1.0.0',	// Current version
@@ -46,10 +45,10 @@ fs.readdirSync(__dirname +'/components').forEach(function (filename){
 })
 
 fs.readdirSync(__dirname +'/filters/handler').forEach(function (filename){
-        if(!/\.js$/.test(filename)) return
-        var name = path.basename(filename, '.js')
-        var _load = load.bind(null, './filters/handler/', name)
-        Object.defineProperty(H9nServer, name, { get: _load })
+	if(!/\.js$/.test(filename)) return
+	var name = path.basename(filename, '.js')
+	var _load = load.bind(null, './filters/handler/', name)
+	Object.defineProperty(H9nServer, name, { get: _load })
 });
 
 function load(path, name){

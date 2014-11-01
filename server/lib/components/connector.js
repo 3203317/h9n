@@ -69,6 +69,8 @@ function hostFilter(cb, socket){
 }
 
 function bindEvents(self, socket){
+	var closed = false;
+
 	socket.on('disconnect', function(){
 		console.log('[%s] Client socket is closed.', utils.format());
 	});

@@ -125,6 +125,20 @@ Application.configure = function (env, type, fn){
 	}
 };
 
+Application.stop = function(force){
+	var self = this;
+	if(self.state > STATE_STARTED){
+		console.warn('[%s] App is not running now.', utils.format());
+		return;
+	}
+
+	self.state = STATE_STOPED;
+
+	if(force){
+		process.exit(0);
+	}
+};
+
 Application.getServerId = function(){
 	return this.get(Constants.RESERVED.CURRENT_SERVER).id;
 };
@@ -156,22 +170,22 @@ Application.getCurServer = function(){
 };
 
 function addFilter(app, type, filter){
-        var filters = app.get(type);
-        if(!filters){
-                filters = [];
-                app.set(type, filters);
-        }
-        filters.push(filter);
+	var filters = app.get(type);
+	if(!filters){
+		filters = [];
+		app.set(type, filters);
+	}
+	filters.push(filter);
 }
 
 function contains(str, settings){
-        if(!settings) return false;
+	if(!settings) return false;
 
-        var ts = settings.split('|');
+	var ts = settings.split('|');
 
-        for(var i in ts){
-                if(str === ts[i]) return true;
-        }
+	for(var i in ts){
+		if(str === ts[i]) return true;
+	}
 
-        return false;
+	return false;
 }
