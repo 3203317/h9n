@@ -79,5 +79,10 @@ function bindEvents(self, socket){
 
 	socket.on('message', function (msg){
 		console.log('[%s] Client socket msg: %j.', utils.format(), msg);
+		handleMessage(self, null, msg);
 	});
+}
+
+function handleMessage(self, session, msg){
+	console.log('handleMessage');
 }

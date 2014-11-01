@@ -39,20 +39,22 @@ pro.start = function(cb){
 	var self = this;
 
 	if(!self.ssl){
-		var tcpServer = self.tcpServer = net.createServer();
-		self.switcher = new Switcher(tcpServer, self.opts);
+		self.tcpServer = net.createServer();
+		self.switcher = new Switcher(self.tcpServer, self.opts);
 		self.switcher.on('connection', newSocket.bind(self));
 		if(self.distinctHost){
-			tcpServer.listen(self.server.clientPort, self.server.host, started.bind(self));
+			self.tcpServer.listen(self.server.clientPort, self.server.host, started.bind(self));
 		}else{
-			tcpServer.listen(self.server.clientPort, started.bind(self));
+			self.tcpServer.listen(self.server.clientPort, started.bind(self));
 		}
 	}
 	process.nextTick(cb)
 };
 
 pro.stop = function(force, cb){
-	if(this.tcpServer) this.tcpServer.close();
+	var self = this;
+	if(self.switcher) self.switcher.close();
+	if(self.tcpServer) self.tcpServer.close();
 	process.nextTick(cb);
 }
 
