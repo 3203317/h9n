@@ -86,5 +86,5 @@ function bindEvents(self, socket){
 }
 
 function handleMessage(self, session, msg){
-	console.log('handleMessage');
+	// TODO
 }

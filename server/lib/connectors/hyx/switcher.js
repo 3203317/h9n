@@ -32,7 +32,6 @@ var Switcher = function(server /* raw */, opts){
 	self.setNoDelay = opts.setNoDelay || false;
 
 	self.id = 1;
-	self.timers = {};
 	self.timeout = opts.timeout || DEFAULT_TIMEOUT;
 
 	self.tcpprocessor = new TCPProcessor(opts.closeMethod);
@@ -49,26 +48,27 @@ module.exports = Switcher;
 
 var pro = Switcher.prototype;
 
-function newSocket(socket){
+var newSocket = function(socket /* raw */){
 	var self = this;
 	if(self.state !== ST_STARTED) return;
 
-	self.timers[self.id] = setTimeout(function(){
-		console.warn('[%s] Socket is timeout, the remote client %s:%s.', utils.format(new Date), socket.remoteAddress, socket.remotePort);
-		socket.destroy();
-	}, self.timeout * 1000);
 	socket.id = self.id++;
+	socket.isdata = false;
+	(function (socket){
+		var timeout = setTimeout(function(){
+			if(!socket.isdata){
+				if(socket.remoteAddress){
+					console.warn('[%s] Socket is timeout, the remote client %s:%s.', utils.format(), socket.remoteAddress, socket.remotePort);
+				}else{
+					console.warn('[%s] Socket is already active closed.', utils.format());
+				}
+				socket.destroy();
+			}
+			clearTimeout(timeout);
+		}, self.timeout * 1000);
+	})(socket);
 
-	socket.once('data', function (data){
-		if(socket.id){
-			clearTimeout(self.timers[socket.id]);
-			delete self.timers[socket.id];
-		}
-		if(!isHttp(data)){
-			socket.setNoDelay(self.setNoDelay);
-			processTcp(self, self.tcpprocessor, socket, data);
-		}
-	});
+	socket.once('data', ondata.bind(self, socket));
 }
 
 pro.close = function(){
@@ -78,15 +78,15 @@ pro.close = function(){
 	self.tcpprocessor.close();
 }
 
-function processHttp(switcher, processor, socket, data){
+var processHttp = function(switcher, processor, socket, data){
 	processor.add(socket, data);
 }
 
-function processTcp(switcher, processor, socket, data){
+var processTcp = function(switcher, processor, socket, data){
 	processor.add(socket, data);
 }
 
-function isHttp(data){
+var isHttp = function(data){
 	var head = data.toString('utf8', 0, 4);
 	for(var i in HTTP_METHODS){
 		if(0 === head.indexOf(HTTP_METHODS[i])){
@@ -94,4 +94,13 @@ function isHttp(data){
 		}
 	}
 	return false;
+}
+
+var ondata = function(socket, data){
+	var self = this;
+	socket.isdata = !!(socket.id);
+	if(!isHttp(data)){
+		socket.setNoDelay(self.setNoDelay);
+		processTcp(self, self.tcpprocessor, socket, data);
+	}
 }
