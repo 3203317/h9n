@@ -66,17 +66,17 @@ pro.stop = function(force, cb){
 	process.nextTick(cb);
 }
 
-function newSocket(socket){
+var newSocket = function(socket){
 	console.log('[%s] New socket: %s:%s.', utils.format(), socket.socket.remoteAddress, socket.socket.remotePort);
 	gensocket.bind(this, socket)();
 }
 
-function gensocket(socket){
+var gensocket = function(socket){
 	var self = this;
 	var hyxsocket = new HyxSocket(curId++, socket);
 	self.emit('connection', hyxsocket);
 }
 
-function started(){
+var started = function(){
 	console.log('[%s] TcpServer started: %j.', utils.format(), this.server.id);
 }

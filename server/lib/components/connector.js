@@ -42,7 +42,7 @@ pro.stop = function(force, cb){
 	process.nextTick(cb);
 };
 
-function getConnector(app, opts){
+var getConnector = function(app, opts){
 	var connector = opts.connector;
 
 	if(!connector){
@@ -57,18 +57,18 @@ function getConnector(app, opts){
 	return connector(curServer, opts);
 }
 
-function getDefaultConnector(app, opts){
+var getDefaultConnector = function(app, opts){
 	var DefaultConnector = require('../connectors/gynconnector');
 	var curServer = app.getCurServer();
 	return new DefaultConnector(curServer, opts);
 }
 
-function hostFilter(cb, socket){
+var hostFilter = function(cb, socket){
 	var self = this;
 	utils.invokeCallback(cb, self, socket);
 }
 
-function bindEvents(self, socket){
+var bindEvents = function(self, socket){
 	var closed = false;
 
 	socket.on('disconnect', function(){
@@ -85,6 +85,6 @@ function bindEvents(self, socket){
 	});
 }
 
-function handleMessage(self, session, msg){
+var handleMessage = function(self, session, msg){
 	// TODO
 }

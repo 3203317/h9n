@@ -44,7 +44,7 @@ pro.disconnect = function(){
 	self.socket.close();
 }
 
-function onmessage(msg){
+var onmessage = function(msg){
 	if(msg){
 		handler(this, {
 			type: 4,
