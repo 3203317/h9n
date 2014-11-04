@@ -47,24 +47,24 @@ exp.optComponents = function(comps, method, cb){
 	})
 };
 
-function processArgs(app, args){
+var processArgs = function(app, args){
 	delete args.env;
 	app.set(Constants.RESERVED.CURRENT_SERVER, args);
 }
 
-function setupEnv(app, args){
+var setupEnv = function(app, args){
 	app.set(Constants.RESERVED.ENV, args.env, true);
 }
 
-function configLogger(app){
+var configLogger = function(app){
 	// TODO
 }
 
-function loadLifecycle(app){
+var loadLifecycle = function(app){
 	// TODO
 }
 
-function parseArgs(args){
+var parseArgs = function(args){
 	var mainPos = 1
 
 	var argsMap = {

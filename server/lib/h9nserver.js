@@ -20,6 +20,11 @@ var H9nServer = module.exports = {
 
 var self = this;
 
+var load = function(path, name){
+	if(name) return require(path + name);
+	return require(path);
+};
+
 H9nServer.createApp = function(opts, cb){
 	var app = application;
 	app.init(opts);
@@ -50,8 +55,3 @@ fs.readdirSync(__dirname +'/filters/handler').forEach(function (filename){
 	var _load = load.bind(null, './filters/handler/', name)
 	Object.defineProperty(H9nServer, name, { get: _load })
 });
-
-function load(path, name){
-	if(name) return require(path + name);
-	return require(path);
-}

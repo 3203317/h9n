@@ -169,7 +169,7 @@ Application.getCurServer = function(){
 	return this.settings.curServer;
 };
 
-function addFilter(app, type, filter){
+var addFilter = function(app, type, filter){
 	var filters = app.get(type);
 	if(!filters){
 		filters = [];
@@ -178,7 +178,7 @@ function addFilter(app, type, filter){
 	filters.push(filter);
 }
 
-function contains(str, settings){
+var contains = function(str, settings){
 	if(!settings) return false;
 
 	var ts = settings.split('|');
