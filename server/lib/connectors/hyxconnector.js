@@ -39,16 +39,16 @@ pro.start = function(cb){
 	var self = this;
 
 	if(!self.ssl){
-		self.tcpServer = net.createServer();
-		self.tcpServer.on('error', function (err){
+		var tcpServer = self.tcpServer = net.createServer();
+		tcpServer.on('error', function (err){
 			console.error('[%s] TcpServer error: %j.', utils.format(), err)
 		});
-		self.tcpServer.on('close', function (err){
+		tcpServer.on('close', function (err){
 			if(err) console.error('[%s] TcpServer error: %j.', utils.format(), err);
 			console.log('[%s] TcpServer closed.', utils.format());
 		});
 
-		self.switcher = new Switcher(self.tcpServer, self.opts);
+		self.switcher = new Switcher(tcpServer, self.opts);
 		self.switcher.on('connection', newSocket.bind(self));
 		if(self.distinctHost){
 			self.tcpServer.listen(self.server.clientPort, self.server.host, started.bind(self));

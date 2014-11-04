@@ -22,6 +22,7 @@ var Socket = function(socket, opts){
 
 	Stream.call(self);
 	self.socket = socket;
+	self.closeMethod = opts.closeMethod;
 
 	socket.on('data', ondata.bind(self));
 	socket.on('end', onend.bind(self));
@@ -42,14 +43,19 @@ pro.send = function(msg, encode, cb){
 }
 
 pro.close = function(){
+	var self = this;
+	if(self.closeMethod && 'end' === self.closeMethod){
+		self.socket.end();
+		return;
+	}
 	try{
-		this.socket.destroy();
+		self.socket.destroy();
 	}catch(e){
 		console.error('[%s] Socket close with destroy error: %j.', utils.format(), e.stack);
 	}
 }
 
-function ondata(chunk){
+var ondata = function(chunk){
 	var self = this;
 
 	if(self.state === ST_CLOSED){
@@ -60,16 +66,17 @@ function ondata(chunk){
 	return true;
 }
 
-function onend(chunk){
+var onend = function(chunk){
+	var self = this;
 	if(chunk){
-		this.socket.write(chunk);
+		self.socket.write(chunk);
 	}
 
-	this.state = ST_CLOSED;
-	reset(this)
-	this.emit('end');
+	self.state = ST_CLOSED;
+	reset(self)
+	self.emit('end');
 }
 
-function reset(socket){
-	socket.state = ST_HEAD;
+var reset = function(self){
+	self.state = ST_HEAD;
 }
