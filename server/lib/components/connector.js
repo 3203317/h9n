@@ -23,6 +23,15 @@ var pro = Component.prototype;
 pro.name = '__connector__';
 
 pro.start = function(cb){
+	var self = this;
+	self.server = self.app.components.__server__;
+
+	if(!self.server){
+		process.nextTick(function(){
+			utils.invokeCallback(cb, new Error('no server component'));
+		});
+		return;
+	}
 	process.nextTick(cb);
 };
 
@@ -80,11 +89,12 @@ var bindEvents = function(self, socket){
 	});
 
 	socket.on('message', function (msg){
-		console.log('[%s] Client socket msg: %j.', utils.format(), msg);
 		handleMessage(self, null, msg);
 	});
 }
 
 var handleMessage = function(self, session, msg){
-	// TODO
+	self.server.globalHandle(msg, null, function (err, resp, opts){
+		console.log('[%s] Client socket msg: %j.', utils.format(), msg);
+	});
 }

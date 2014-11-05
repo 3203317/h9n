@@ -45,10 +45,8 @@ pro.disconnect = function(){
 }
 
 var onmessage = function(msg){
-	if(msg){
-		handler(this, {
-			type: 4,
-			msg: msg
-		});
-	}
+	handler(this, {
+		type: 4,
+		msg: msg
+	});
 }

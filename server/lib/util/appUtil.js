@@ -26,6 +26,7 @@ exp.loadDefaultComponents = function(app){
 	var h9nserver = require('../');
 
 	app.load(h9nserver.connector, app.get('connectorConfig'));
+	app.load(h9nserver.server, app.get('serverConfig'));
 };
 
 exp.startByType = function(app, cb){
