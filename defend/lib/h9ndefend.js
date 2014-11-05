@@ -21,7 +21,7 @@ var utils = require('../../shared/utils');
 
 var h9ndefend = exports;
 
-var console = h9ndefend.log = new (winston.Logger)({
+var _console = h9ndefend.log = new (winston.Logger)({
 	transports: [
 		new (winston.transports.Console)()
 	]
@@ -71,7 +71,7 @@ h9ndefend.load = function(options){
 	try{
 		h9ndefend.config.loadSync();
 	}catch(e){
-		console.error('[%s] Load config error: %j.', utils.format(), e);
+		_console.error('[%s] Load config error: %j.', utils.format(), e);
 	}
 
 	options.columns  = options.columns  || h9ndefend.config.get('columns');
@@ -108,23 +108,23 @@ h9ndefend.load = function(options){
 		h9ndefend.config.saveSync();
 	}
 	catch(e){
-		console.error('[%s] Try save error: %j.', utils.format(), e);
+		_console.error('[%s] Try save error: %j.', utils.format(), e);
 	}
 
 	h9ndefend.initialized = true;
 };
 
-function tryCreate(dir){
+var tryCreate = function(dir){
 	if(!dir) return;
 	try{
 		fs.mkdirSync(dir, '0755');
 	}
 	catch(e){
-		// console.error('[%s] Try create %j error: %j.', utils.format(), dir, e);
+		// _console.error('[%s] Try create %j, error: %j.', utils.format(), dir, e.message);
 	}
 }
 
-function getAllProcesses(cb){
+var getAllProcesses = function(cb){
 	var sockPath = h9ndefend.config.get('sockPath');
 
 	getSockets(sockPath, function (err, sockets){
@@ -138,7 +138,7 @@ function getAllProcesses(cb){
 	});
 }
 
-function getSockets(sockPath, cb){
+var getSockets = function(sockPath, cb){
 	var sockets;
 
 	try{
