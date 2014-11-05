@@ -66,7 +66,7 @@ app.use(flatiron.plugins.cli, {
 	usage: help
 });
 
-function tryStart(file, options, cb){
+var tryStart = function(file, options, cb){
 	var fullLog, fullScript;
 
 	if(options.path){

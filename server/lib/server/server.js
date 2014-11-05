@@ -45,5 +45,23 @@ pro.globalHandle = function(msg, session, cb){
 		return;
 	}
 
+	var routeRecord = parseRoute(msg.route);
+
 	console.log('globalHandle')
+}
+
+var parseRoute = function(route){
+	if(!route) return;
+
+	var ts = route.split('.');
+	if(3 !== ts.length){
+		return;
+	}
+
+	return {
+		route: route,
+		serverType: ts[0],
+		handler: ts[1],
+		method: ts[2]
+	};
 }
