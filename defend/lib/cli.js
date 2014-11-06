@@ -110,6 +110,15 @@ app.cmd('list', cli.list = function(){
 });
 
 cli.start = function(){
+	if(app.argv.version){
+		console.log('v%s', h9ndefend.version);
+		return;
+	}
+
+	if(app.config.get('help')){
+		return util.puts(help.join('\n'))
+	}
+
 	app.init(function(){
 		app.start();
 	});
