@@ -109,6 +109,10 @@ app.cmd('list', cli.list = function(){
 	});
 });
 
+cli.run = function(){
+	// TODO
+};
+
 cli.start = function(){
 	if(app.argv.version){
 		console.log('v%s', h9ndefend.version);
@@ -120,6 +124,9 @@ cli.start = function(){
 	}
 
 	app.init(function(){
+		if(app.argv._.length && -1 === actions.indexOf(app.argv._[0])){
+			return cli.run();
+		}
 		app.start();
 	});
 };
