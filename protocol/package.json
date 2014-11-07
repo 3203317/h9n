@@ -1,0 +1,16 @@
+{
+  "name": "h9n-protocol",
+  "version": "1.0.0",
+  "description": "h9n-protocol",
+  "main": "index.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "should": ">=0.0.1",
+    "mocha": ">=0.0.1",
+    "jscoverage": ">=0.0.1"
+  },
+  "author": "huangxin",
+  "license": "MIT",
+  "homepage": "https://github.com/3203317/h9n"
+}
