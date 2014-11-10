@@ -5,12 +5,20 @@
  */
 'use strict';
 
+var admin = require('../../../admin');
+
 var utils = require('../../../shared/utils');
 
 var Monitor = function(app, opts){
 	var self = this;
 	opts = opts || {};
 	self.app = app;
+	self.serverInfo = app.getCurServer();
+	self.modules = [];
+
+	self.monitorConsole = admin.createMonitorConsole({
+		id: self.serverInfo.id
+	});
 };
 
 module.exports = Monitor;
@@ -18,16 +26,12 @@ module.exports = Monitor;
 var pro = Monitor.prototype;
 
 pro.start = function(cb){
-	// TODO
+	utils.invokeCallback(cb);
 };
 
 pro.stop = function(cb){
+	this.modules = [];
 	process.nextTick(function(){
 		utils.invokeCallback(cb);
 	});
-};
-
-pro.reconnect = function(masterInfo){
-	var self = this;
-	// TODO
 };

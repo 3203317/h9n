@@ -23,13 +23,8 @@ pro.name = '__monitor__';
 
 pro.start = function(cb){
 	this.monitor.start(cb);
-	process.nextTick(cb);
 };
 
 pro.stop = function(force, cb){
 	this.monitor.stop(cb);
 };
-
-pro.reconnect = function(masterInfo){
-	this.monitor.reconnect(masterInfo);
-}
