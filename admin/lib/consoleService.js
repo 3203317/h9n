@@ -5,8 +5,20 @@
  */
 'use strict';
 
+var util = require('util'),
+	EventEmitter = require('events').EventEmitter;
+
 var ConsoleService = function(opts){
 	var self = this;
+	EventEmitter.call(self);
+};
+
+util.inherits(ConsoleService, EventEmitter);
+
+var pro = ConsoleService.prototype;
+
+pro.start = function(cb){
+	// TODO
 };
 
 module.exports.createMonitorConsole = function(opts){
