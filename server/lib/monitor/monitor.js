@@ -46,6 +46,8 @@ pro.startConsole = function(cb){
 			return;
 		}
 	});
+
+	utils.invokeCallback(cb);
 };
 
 pro.stop = function(cb){

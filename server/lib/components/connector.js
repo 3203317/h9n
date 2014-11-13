@@ -15,6 +15,7 @@ var Component = function(app, opts){
 	var self = this;
 	opts = opts || {}
 	self.app = app;
+	self.blacklist = opts.blacklist;
 	self.connector = getConnector(app, opts);
 }
 
@@ -73,9 +74,26 @@ var getDefaultConnector = function(app, opts){
 }
 
 var hostFilter = function(cb, socket){
-	var self = this;
+	var self = this,
+		ip = socket.remoteAddress.ip;
+
+	if(checkIp(self.blacklist, ip)){
+		socket.disconnect();
+		return;
+	}
+
 	utils.invokeCallback(cb, self, socket);
 }
+
+var checkIp = function(list, ip){
+	for(var i in list){
+		var exp = new RegExp(list[i]);
+		if(exp.test(ip)){
+			return true;
+		}
+	}
+	return false;
+};
 
 var bindEvents = function(self, socket){
 	var closed = false;
