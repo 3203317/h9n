@@ -20,9 +20,10 @@ var Socket = function(socket, opts){
 		return new Socket(socket, opts);
 	}
 
+	self.opts = opts || {};
+
 	Stream.call(self);
 	self.socket = socket;
-	self.closeMethod = opts.closeMethod;
 
 	socket.on('data', ondata.bind(self));
 	socket.on('end', onend.bind(self));
@@ -44,7 +45,7 @@ pro.send = function(msg, encode, cb){
 
 pro.close = function(){
 	var self = this;
-	if(self.closeMethod && 'end' === self.closeMethod){
+	if(self.opts.closeMethod && 'end' === self.opts.closeMethod){
 		self.socket.end();
 		return;
 	}

@@ -17,10 +17,10 @@ var hostFilter = function(ip){
 
 var Component = function(app, opts){
 	var self = this;
-	opts = opts || {}
+	opts = opts || {};
+	opts.hostFilter = hostFilter.bind(self);
 	self.app = app;
 	self.blacklist = opts.blacklist;
-	opts.hostFilter = hostFilter.bind(self);
 	self.connector = getConnector(app, opts);
 }
 
