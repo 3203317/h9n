@@ -28,12 +28,12 @@ var Switcher = function(server /* raw */, opts){
 	var self = this;
 	EventEmitter.call(self);
 
+	self.opts = opts || {};
+	opts.setNoDelay = opts.setNoDelay || false;
+	opts.timeout = opts.timeout || DEFAULT_TIMEOUT;
+
 	self.server = server;
-	self.setNoDelay = opts.setNoDelay || false;
-
 	self.id = 1;
-	self.timeout = opts.timeout || DEFAULT_TIMEOUT;
-
 	self.tcpprocessor = new TCPProcessor(opts.closeMethod);
 
 	self.server.on('connection', newSocket.bind(self));
@@ -52,6 +52,11 @@ var newSocket = function(socket /* raw */){
 	var self = this;
 	if(self.state !== ST_STARTED) return;
 
+	if(self.opts.hostFilter(socket.remoteAddress)){
+		socket.destroy();
+		return;
+	}
+
 	socket.id = self.id++;
 	socket.isdata = false;
 	(function (socket){
@@ -65,7 +70,7 @@ var newSocket = function(socket /* raw */){
 				socket.destroy();
 			}
 			clearTimeout(timeout);
-		}, self.timeout * 1000);
+		}, self.opts.timeout * 1000);
 	})(socket);
 
 	socket.once('data', ondata.bind(self, socket));
@@ -100,7 +105,7 @@ var ondata = function(socket, data){
 	var self = this;
 	socket.isdata = !!(socket.id);
 	if(!isHttp(data)){
-		socket.setNoDelay(self.setNoDelay);
+		socket.setNoDelay(self.opts.setNoDelay);
 		processTcp(self, self.tcpprocessor, socket, data);
 	}
 }

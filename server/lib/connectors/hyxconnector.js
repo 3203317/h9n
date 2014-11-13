@@ -25,8 +25,6 @@ var Connector = function(server, opts){
 
 	self.opts = opts || {};
 	self.server = server;
-	self.distinctHost = opts.distinctHost;
-	self.ssl = opts.ssl;
 };
 
 util.inherits(Connector, EventEmitter);
@@ -38,7 +36,7 @@ var pro = Connector.prototype;
 pro.start = function(cb){
 	var self = this;
 
-	if(!self.ssl){
+	if(!self.opts.ssl){
 		var tcpServer = self.tcpServer = net.createServer();
 		tcpServer.on('error', function (err){
 			console.error('[%s] TcpServer error: %j.', utils.format(), err)
@@ -50,7 +48,7 @@ pro.start = function(cb){
 
 		self.switcher = new Switcher(tcpServer, self.opts);
 		self.switcher.on('connection', newSocket.bind(self));
-		if(self.distinctHost){
+		if(self.opts.distinctHost){
 			self.tcpServer.listen(self.server.clientPort, self.server.host, started.bind(self));
 		}else{
 			self.tcpServer.listen(self.server.clientPort, started.bind(self));

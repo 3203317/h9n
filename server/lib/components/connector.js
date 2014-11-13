@@ -11,11 +11,16 @@ module.exports = function(app, opts){
 	return new Component(app, opts)
 }
 
+var hostFilter = function(ip){
+	return checkIp(this.blacklist, ip);
+};
+
 var Component = function(app, opts){
 	var self = this;
 	opts = opts || {}
 	self.app = app;
 	self.blacklist = opts.blacklist;
+	opts.hostFilter = hostFilter.bind(self);
 	self.connector = getConnector(app, opts);
 }
 
@@ -39,7 +44,7 @@ pro.start = function(cb){
 pro.afterStart = function(cb){
 	var self = this;
 	self.connector.start(cb);
-	self.connector.on('connection', hostFilter.bind(self, bindEvents));
+	self.connector.on('connection', bindEvents.bind(self));
 };
 
 pro.stop = function(force, cb){
@@ -73,18 +78,6 @@ var getDefaultConnector = function(app, opts){
 	return new DefaultConnector(curServer, opts);
 }
 
-var hostFilter = function(cb, socket){
-	var self = this,
-		ip = socket.remoteAddress.ip;
-
-	if(checkIp(self.blacklist, ip)){
-		socket.disconnect();
-		return;
-	}
-
-	utils.invokeCallback(cb, self, socket);
-}
-
 var checkIp = function(list, ip){
 	for(var i in list){
 		var exp = new RegExp(list[i]);
@@ -95,8 +88,8 @@ var checkIp = function(list, ip){
 	return false;
 };
 
-var bindEvents = function(self, socket){
-	var closed = false;
+var bindEvents = function(socket){
+	var self = this;
 
 	socket.on('disconnect', function(){
 		console.log('[%s] Client socket is closed.', utils.format());
