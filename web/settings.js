@@ -1,9 +1,9 @@
 module.exports = { 
-	cookieSecret: 'foreworld',
-	db: 'foreworld',
-	host: '127.0.0.1',
+	cookieSecret: 'h9n',
+	db: 'h9n',
+	host: 'www.foreworld.net',
 	port: 27017,
 	user: 'sa',
-	pass: '123',
+	pass: 'h9n',
 	cdn: 'http://www.foreworld.net:8082/js/'
 };
