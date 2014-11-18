@@ -15,24 +15,26 @@ module.exports = function(timeout, maxSize){
 }
 
 var Filter = function(timeout, maxSize){
-	this.timeout = timeout
-	this.maxSize = maxSize
-	this.timeouts = {}
-	this.curId = 0
+	var self = this;
+	self.timeout = timeout;
+	self.maxSize = maxSize;
+	self.timeouts = {};
+	self.curId = 0;
 };
 
 Filter.prototype.before = function(msg, session, next){
-	var count = utils.size(this.timeouts);
-	if(count > this.maxSize){
-		console.log('[%s] Timeout filter is out of range, current size is %s, max size is %s.', utils.format(), count, this.maxSize);
+	var self = this;
+	var count = utils.size(self.timeouts);
+	if(count > self.maxSize){
+		console.log('[%s] Timeout filter is out of range, current size is %s, max size is %s.', utils.format(), count, self.maxSize);
 		next();
 		return;
 	}
-	this.curId++;
-	this.timeouts[this.curId] = setTimeout(function(){
+	self.curId++;
+	self.timeouts[self.curId] = setTimeout(function(){
 		console.warn('[%s] Request %j timeout.', utils.format(), msg.__route__)
-	}, this.timeout);
-	session.__timeout__ = this.curId;
+	}, self.timeout);
+	session.__timeout__ = self.curId;
 	next();
 }
 
