@@ -9,7 +9,7 @@ var util = require('util'),
 	EventEmitter = require('events').EventEmitter;
 
 var utils = require('../../../shared/utils'),
-	handler = require('../common/handler');
+	handler = require('./common/handler');
 
 var ST_INITED = 0,
 	ST_WAIT_ACK = 1,

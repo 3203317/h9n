@@ -7,7 +7,9 @@
     "test": "test.js"
   },
   "dependencies": {
-    "async": "*"
+    "async": "*",
+    "toobusy": "*",
+    "seq-queue": "0.0.5"
   },
   "author": "huangxin",
   "license": "MIT",

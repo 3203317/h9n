@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var utils = require('../../../shared/utils');
+var utils = require('../../../../shared/utils');
 
 var handlers = {};
 
