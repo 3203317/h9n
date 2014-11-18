@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+	<head>
+		#parse('pagelet/IndexHeader.html')
+		<link rel='stylesheet' type='text/css' href='${virtualPath}public/manage/css/index.css?v3' media='screen' />
+	</head>
+	<body>
+		#parse('manage/pagelet/TopBanner.html')
+		<header id='header'></header>
+		<div class='container'>
+			<div class='row'>
+				<div class='col-sm-12 col-md-2'>
+					#parse('manage/pagelet/Side.Nav.html')
+				</div>
+				<div class='col-sm-12 col-md-10'>
+				</div>
+			</div>
+		</div>
+		#parse('pagelet/IndexJs.html')
+	</body>
+</html>
