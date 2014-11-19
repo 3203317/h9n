@@ -1,3 +1,10 @@
+/*!
+ * h9n-web
+ * Copyright(c) 2014 huangxin <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
 var express = require('express'),
 	routes = require('./routes'),
 	http = require('http'),

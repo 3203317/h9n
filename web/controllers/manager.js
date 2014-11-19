@@ -1,14 +1,14 @@
 var conf = require('../settings'),
 	EventProxy = require('eventproxy');
 
-var title = 'FOREWORLD 洪荒',
+var title = 'H9N WebMonitor',
 	virtualPath = '/';
 
 var Manager = require('../biz/manager');
 
 exports.loginUI = function(req, res, next){
 	res.render('manager/Login', {
-		title: '后台登陆 - '+ title,
+		title: 'LOGIN | '+ title,
 		description: '',
 		keywords: ',Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,
