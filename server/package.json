@@ -7,8 +7,8 @@
     "test": "test.js"
   },
   "dependencies": {
-    "async": "*",
-    "toobusy": "*",
+    "async": "0.9.0",
+    "toobusy": "0.2.4",
     "seq-queue": "0.0.5"
   },
   "author": "huangxin",
