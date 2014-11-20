@@ -4,14 +4,17 @@ var mongoose = require('mongoose'),
 
 var util = require('../lib/util');
 
-var TagSchema = new Schema({
-	TagName: {
+var ServerSchema = new Schema({
+	ServerName: {
 		type: String,
 		required: true,
-		unique: true,
 		index: true
-	}, Count: {
-		type: Number
+	}, IP: {
+		type: String
+	}, PORT: {
+		type: String
+	}, CPU: {
+		type: String
 	}, User_Id: {		// 用户Id
 		type: ObjectId
 	}
@@ -24,19 +27,8 @@ var TagSchema = new Schema({
 	}
 });
 
-TagSchema.virtual('CreateTime').get(function(){
+ServerSchema.virtual('CreateTime').get(function(){
 	return (new Date(this._id.getTimestamp())).format();
 });
 
-TagSchema.virtual('PostTime').get(function(){
-	return this._id.getTimestamp();
-});
-
-TagSchema.pre('save', function (next, done){
-	next();
-});
-
-TagSchema.post('save', function(){
-});
-
-mongoose.model('Tag', TagSchema);
+mongoose.model('Server', ServerSchema);

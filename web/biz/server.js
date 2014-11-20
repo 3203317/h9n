@@ -1,5 +1,5 @@
 var models = require('../models'),
-	Tag = models.Tag;
+	Server = models.Server;
 
 /**
  * 保存新
@@ -10,7 +10,7 @@ var models = require('../models'),
  */
 exports.saveNew = function(newInfo, cb){
 	newInfo.Count = newInfo.Count || 0;
-	Tag.create(newInfo, function (err, doc){
+	Server.create(newInfo, function (err, doc){
 		if(err) return cb(err);
 		cb(null, 0, null, doc);
 	});
@@ -26,11 +26,11 @@ exports.saveNew = function(newInfo, cb){
 exports.findAll = function(user_id, cb){
 	var option = {
 		sort: {
-			TagName: 1
+			ServerName: 1
 		}
 	};
 
-	Tag.find(null, null, option, function (err, docs){
+	Server.find(null, null, option, function (err, docs){
 		if(err) return cb(err);
 		cb(null, 0, null, docs);
 	});
@@ -43,8 +43,8 @@ exports.findByNames = function(names, cb){
 		arr.push(new RegExp('^'+ names[s] +'$', 'i'));
 	}
 
-	Tag.find({
-		TagName: {
+	Server.find({
+		ServerName: {
 			'$in': arr
 		}
 	}, null, null, function (err, docs){
@@ -54,7 +54,7 @@ exports.findByNames = function(names, cb){
 };
 
 exports.remove = function(Ids, cb){
-	Tag.remove({
+	Server.remove({
 		_id: {
 			'$in': Ids
 		}
@@ -65,7 +65,7 @@ exports.remove = function(Ids, cb){
 };
 
 exports.findById = function(id, cb){
-	Tag.findOne({
+	Server.findOne({
 		_id: id
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
@@ -74,10 +74,10 @@ exports.findById = function(id, cb){
 };
 
 exports.editInfo = function(newInfo, cb){
-	Tag.update({
+	Server.update({
 		_id: newInfo.id
 	}, {
-		TagName: newInfo.TagName
+		ServerName: newInfo.ServerName
 	}, function (err, count){
 		if(err) return cb(err);
 		cb(null, 0, null, count);

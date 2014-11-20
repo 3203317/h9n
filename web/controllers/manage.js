@@ -4,9 +4,6 @@ var conf = require('../settings'),
 var title = 'SpeedT WebMonitor v'+ require('../package.json').version,
 	virtualPath = '/';
 
-var Category = require('../biz/category'),
-	Tag = require('../biz/tag');
-
 exports.indexUI = function(req, res, next){
 	res.render('manage/Index', {
 		title: '后台管理 | '+ title,
