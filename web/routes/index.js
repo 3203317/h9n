@@ -5,8 +5,7 @@
  */
 'use strict';
 
-var user = require('../controllers/user'),
-	manager = require('../controllers/manager');
+var user = require('../controllers/user');
 
 var virtualPath = '',
 	title = 'H9N Web Monitor',
@@ -14,8 +13,8 @@ var virtualPath = '',
 
 module.exports = function(app){
 	app.post('/user/login$', valiPostData, user.login);
-	app.get('/user/login$', manager.loginUI);
-	app.get('/user/login/success$', user.validate, user.login_success);
+	app.get('/user/login$', user.loginUI);
+	// app.get('/user/login/success$', user.validate, user.login_success);
 };
 
 /**

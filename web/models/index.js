@@ -1,3 +1,10 @@
+/*!
+ * h9n-web
+ * Copyright(c) 2014 huangxin <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
 var mongoose = require('mongoose'),
 	settings = require('../settings');
 
@@ -11,24 +18,12 @@ db.once('open', function(){
 
 mongoose.connect(url, function (err){
 	if(err){
-		console.log('Connect to %s Error: ', url, err.message);
+		console.error('Connect to %s Error: %s.', url, err.message);
 		process.exit(1);
 	}
 });
 
 // models
 require('./User');
-require('./Article');
-require('./Comment');
-require('./Link');
-require('./Category');
-require('./Tag');
-require('./Manager');
 
 exports.User = mongoose.model('User');
-exports.Article = mongoose.model('Article');
-exports.Comment = mongoose.model('Comment');
-exports.Link = mongoose.model('Link');
-exports.Category = mongoose.model('Category');
-exports.Tag = mongoose.model('Tag');
-exports.Manager = mongoose.model('Manager');
