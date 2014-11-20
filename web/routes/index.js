@@ -5,16 +5,18 @@
  */
 'use strict';
 
-var user = require('../controllers/user');
+var user = require('../controllers/user'),
+	manage = require('../controllers/manage');
 
 var virtualPath = '',
-	title = 'H9N Web Monitor',
+	title = 'SpeedT WebMonitor',
 	str1 = '参数异常';
 
 module.exports = function(app){
 	app.post('/user/login$', valiPostData, user.login);
 	app.get('/user/login$', user.loginUI);
-	// app.get('/user/login/success$', user.validate, user.login_success);
+
+	app.get('/manage/', user.validate, manage.indexUI);
 };
 
 /**

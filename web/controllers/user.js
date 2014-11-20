@@ -8,7 +8,7 @@
 var conf = require('../settings'),
 	EventProxy = require('eventproxy');
 
-var title = 'H9N WebMonitor',
+var title = 'SpeedT WebMonitor',
 	virtualPath = '/';
 
 var User = require('../biz/user');
@@ -45,7 +45,7 @@ exports.login = function(req, res, next){
 
 exports.changePwdUI = function(req, res, next){
 	res.render('user/ChangePwd', {
-		title: '修改密码 - 后台管理 - '+ title,
+		title: '修改密码 | 后台管理 | '+ title,
 		description: '',
 		keywords: ',Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,
