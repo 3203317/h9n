@@ -6,7 +6,8 @@
 'use strict';
 
 var user = require('../controllers/user'),
-	manage = require('../controllers/manage');
+	manage = require('../controllers/manage'),
+	server = require('../controllers/server');
 
 var virtualPath = '',
 	title = 'SpeedT WebMonitor',
@@ -20,6 +21,8 @@ module.exports = function(app){
 	app.post('/user/changePwd$', valiPostData, user.validate, user.changePwd);
 
 	app.get('/manage/', user.validate, manage.indexUI);
+
+	app.get('/server/', user.validate, server.indexUI);
 };
 
 /**
