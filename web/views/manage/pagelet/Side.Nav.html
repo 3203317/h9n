@@ -1,27 +1,21 @@
+<style>
+#accordion .list-group-item a {
+	font-size: 12px;
+}
+</style>
 <div class='panel-group' id='accordion'>
 	<div class='panel panel-default'>
-		<div class='panel-heading'>
-			<h4 class='panel-title'>
-				<a data-toggle='collapse' data-parent='#accordion' href='#collapseSys'>系统管理</a>
-			</h4>
-		</div>
-		<div id='collapseSys' class='panel-collapse collapse'>
-			<div class='panel-body'>
-				<p><a href='javascript:;'>用户管理</a></p>
-			</div>
-		</div>
+		<div class='panel-heading'>系统管理</div>
+		<ul class='list-group'>
+			<li class='list-group-item'><a href='javascript:;'>用户管理</a></li>
+		</ul>
 	</div>
 	<div class='panel panel-default'>
-		<div class='panel-heading'>
-			<h4 class='panel-title'>
-				<a data-toggle='collapse' data-parent='#accordion' href='#collapseBlog'>博客管理</a>
-			</h4>
-		</div>
-		<div id='collapseBlog' class='panel-collapse collapse in'>
-			<div class='panel-body'>
-				<p><a href='${virtualPath}manage/article/category/'>文章分类</a></p>
-				<p><a href='${virtualPath}manage/article/tag/'>文章标签</a></p>
-			</div>
-		</div>
+		<div class='panel-heading'>服务器管理</div>
+		<ul class='list-group'>
+			<li class='list-group-item'><a href='${virtualPath}manage/'>Dashboard</a></li>
+			<li class='list-group-item'><a href='${virtualPath}manage/article/tag/'>服务器列表</a></li>
+			<li class='list-group-item'><a href='${virtualPath}manage/article/category/'>黑名单</a></li>
+		</ul>
 	</div>
 </div>

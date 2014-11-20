@@ -8,7 +8,7 @@
 var conf = require('../settings'),
 	EventProxy = require('eventproxy');
 
-var title = 'SpeedT WebMonitor',
+var title = 'SpeedT WebMonitor v'+ require('../package.json').version,
 	virtualPath = '/';
 
 var User = require('../biz/user');

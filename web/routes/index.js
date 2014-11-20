@@ -13,8 +13,11 @@ var virtualPath = '',
 	str1 = '参数异常';
 
 module.exports = function(app){
+	app.get('/user/logout$', user.validate, user.logout);
 	app.post('/user/login$', valiPostData, user.login);
 	app.get('/user/login$', user.loginUI);
+	app.get('/user/changePwd$', user.validate, user.changePwdUI);
+	app.post('/user/changePwd$', valiPostData, user.validate, user.changePwd);
 
 	app.get('/manage/', user.validate, manage.indexUI);
 };
