@@ -19,3 +19,23 @@ exports.indexUI = function(req, res, next){
 		cdn: conf.cdn
 	});
 };
+
+exports.addUI = function(req, res, next){
+	res.render('server/Add', {
+		title: '服务器管理 | 新增服务器 | '+ title,
+		description: '',
+		keywords: ',Bootstrap3,nodejs,express',
+		virtualPath: virtualPath,
+		cdn: conf.cdn
+	});
+};
+
+exports.editUI = function(req, res, next){
+	res.render('server/Edit', {
+		title: '服务器管理 | 编辑服务器 | '+ title,
+		description: '',
+		keywords: ',Bootstrap3,nodejs,express',
+		virtualPath: virtualPath,
+		cdn: conf.cdn
+	});
+};

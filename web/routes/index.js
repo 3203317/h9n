@@ -23,6 +23,8 @@ module.exports = function(app){
 	app.get('/manage/', user.validate, manage.indexUI);
 
 	app.get('/server/', user.validate, server.indexUI);
+	app.get('/server/add$', user.validate, server.addUI);
+	app.get('/server/edit$', user.validate, server.editUI);
 };
 
 /**
