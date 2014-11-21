@@ -23,8 +23,31 @@
 									<a href='.'>服务器列表</a></li>
 								<li class='active'>新增服务器</li>
 							</ol>
-							<div class='panel'>
-							</div>
+							<form class='form-horizontal' id='addFrm' role='form' onsubmit='return false;' data-url='changePwd'>
+								<div class='form-group'>
+									<label class='col-sm-2 hidden-xs control-label' for='addFrm_ServerName'>服务器名称</label>
+									<div class='col-sm-4'>
+										<input type='text' class='form-control' name='ServerName' id='addFrm_ServerName' placeholder='服务器名称'>
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-2 hidden-xs control-label' for='addFrm_IP'>IP地址</label>
+									<div class='col-sm-4'>
+										<input type='text' class='form-control' name='IP' id='addFrm_IP' placeholder='IP地址'>
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-2 hidden-xs control-label' for='addFrm_Port'>端口</label>
+									<div class='col-sm-4'>
+										<input type='text' class='form-control' name='Port' id='addFrm_Port' placeholder='端口'>
+									</div>
+								</div>
+								<div class='form-group'>
+									<div class='col-sm-offset-2 col-sm-4'>
+										<button id='addFrm_btn_sub' type='button' class='btn btn-primary btn-sm'>保存</button>
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -34,8 +57,8 @@
 		<script type='text/javascript'>
 			function showVali(valiResu){ }
 
-			$('#chpwdFrm_btn_sub').click(function(){
-				$('#chpwdFrm').olxForm('submit', [function(){
+			$('#addFrm_btn_sub').click(function(){
+				$('#addFrm').olxForm('submit', [function(){
 				}, function (valiResu){
 					showVali(valiResu);
 				}, function (data){

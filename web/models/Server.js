@@ -11,9 +11,9 @@ var ServerSchema = new Schema({
 		index: true
 	}, IP: {
 		type: String
-	}, PORT: {
+	}, Port: {
 		type: String
-	}, CPU: {
+	}, Cpu: {
 		type: String
 	}, User_Id: {		// 用户Id
 		type: ObjectId
@@ -25,10 +25,6 @@ var ServerSchema = new Schema({
 	}, toJSON: {
 		virtuals: true
 	}
-});
-
-ServerSchema.virtual('CreateTime').get(function(){
-	return (new Date(this._id.getTimestamp())).format();
 });
 
 mongoose.model('Server', ServerSchema);
